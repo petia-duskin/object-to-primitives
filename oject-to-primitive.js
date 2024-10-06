@@ -36,3 +36,32 @@ obj2.valueOf = function () {
 
 console.log(String(obj2)) // Name
 console.log(Number(obj2)) // 25
+
+const objj = {a: 1, b: 2}
+
+
+// возможность перебирать объект
+let range = {
+    from: 1,
+    to: 5
+}
+
+range[Symbol.iterator] = function () {
+    return {
+        current: this.from,
+        last: this.to,
+
+        next() {
+            if (this.current <= this.last) {
+                return {done: false, value: this.current++}
+            } else {
+                return {done: true}
+            }
+        }
+    }
+}
+
+
+for (let val of range) {
+    console.log(val)
+}
