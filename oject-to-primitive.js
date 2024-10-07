@@ -63,5 +63,61 @@ range[Symbol.iterator] = function () {
 
 
 for (let val of range) {
+    // console.log(val)
+}
+
+
+// пример итерируемого массива
+
+let iteratedArray = {
+    from: 0,
+    to: 5,
+
+    [Symbol.iterator]() {
+        this.current = this.from;
+
+        // используем стрелочную функцию чтобы наследовать контекст
+        return {
+            next: () => {
+                if (this.current <= this.to) {
+                    return {done: false, value: this.current++}
+                } else {
+                    return {done: true}
+                }
+            }
+        }
+    }
+}
+
+// явный вызор интератора
+
+let helloWorld = "Hello world"
+
+let stringIterator = helloWorld[Symbol.iterator]()
+
+while (true) {
+    let result = stringIterator.next();
+    if (result.done) {
+        break;
+    }
+
+    console.log(result.value)
+}
+
+console.log("iteratedArray")
+for (let val of iteratedArray) {
     console.log(val)
 }
+
+// пример псевдомассива
+let arrayLike = {
+    0: "Hello",
+    1: "World",
+    length: 2
+}
+
+// Array.from делает из интерируемого или псевдомассива, настоящий массив
+
+let newArr = Array.from(arrayLike)
+console.log(newArr)
+
